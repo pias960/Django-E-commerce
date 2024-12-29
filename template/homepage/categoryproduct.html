@@ -1,0 +1,149 @@
+{% extends 'base file/base.html' %}
+{% block home %}
+<div class="container" id="all-product">
+    <h2>{{category.name}}</h2>
+    <div class="tab-content tab-content-carousel just-action-icons-sm">
+        <div class="tab-pane p-0 fade show active" id="new-all-tab" role="tabpanel" aria-labelledby="new-all-link">
+            <div class="owl-carousel owl-full carousel-equal-height carousel-with-shadow" data-toggle="owl"
+                data-owl-options='{
+                    "nav": true,
+                    "dots": true,
+                    "margin": 20,
+                    "loop": false,
+                    "responsive": {
+                        "0": {
+                            "items":2
+                        },
+                        "480": {
+                            "items":2
+                        },
+                        "768": {
+                            "items":3
+                        },
+                        "992": {
+                            "items":4
+                        },
+                        "1200": {
+                            "items":5
+                        }
+                    }
+                }'>
+
+              {% for  i in product %}
+
+                <div class="product product-2">
+                    <figure class="product-media">
+                        <span class="product-label label-circle label-top">Top</span>
+                        <a href="{{i.get_product_url}}">
+                        <img src="{{i.image.url}}" alt="Product image" class="product-image">
+                        </a>
+
+                        <!--<div class="product-action-vertical">-->
+                        <!--    <a href="#" class="btn-product-icon btn-wishlist" title="Add to wishlist"></a>-->
+                        <!--</div><!-- End .product-action -->-->
+
+
+                    <div class="product-body">
+                        <div class="product-cat">
+                            <a href="{{i.get_product_url}}">{{i.category}}</a>
+                        </div><!-- End .product-cat -->
+                        <h3 class="product-title"><a href="{{i.get_product_url}}">{{i.name}}</a></h3><!-- End .product-title -->
+                        <div class="product-price">
+                           {{i.price}}
+                        </div><!-- End .product-price -->
+                        <div class="ratings-container">
+                            <div class="ratings">
+                                <div class="ratings-val" style="width: 100%;"></div><!-- End .ratings-val -->
+                            </div><!-- End .ratings -->
+                            <span class="ratings-text">( 4 Reviews )</span>
+                        </div><!-- End .rating-container -->
+                    </div><!-- End .product-body -->
+                </div><!-- End .product -->
+
+
+
+                {% endfor  %}
+            </div>
+            </div><!-- End .product -->
+        </div><!-- End .owl-carousel -->
+        <div class="mobile-menu-container">
+            <div class="mobile-menu-wrapper">
+                <span class="mobile-menu-close"><i class="icon-close"></i></span>
+
+                <!--<form action="#" method="get" class="mobile-search">-->
+                <!--    <label for="mobile-search" class="sr-only">Search</label>-->
+                <!--    <input type="search" class="form-control" name="mobile-search" id="mobile-search" placeholder="Search in..." required>-->
+                <!--    <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>-->
+                <!--</form>-->
+
+                <nav class="mobile-nav">
+                    <ul class="mobile-menu">
+                        <li class="active">
+                            <a href="{% url 'Uhome'  %}">Home</a>
+
+
+                        </li>
+                        <li>
+                            <a href="#">About us</a>
+
+                        </li>
+
+
+                        <li>
+                            <a href="#">Category</a>
+
+                            <ul>
+
+                                {%  for cat in sub %}
+
+                                                      <li><a href="{% url 'products_by_category' cat.id %}">{{cat.name | upper}}</a>
+
+
+                                                      </li>
+
+
+
+                                                  {% endfor %}
+
+
+                            </ul>
+                        </li>
+                        {%  if user.is_authenticated %}
+                        <li>
+
+
+                          <a href="#">{{ request.user}}</a>
+                          <ul>
+
+                              <li><a href="{% url 'profile'  %}">Profile</a></li>
+                                                      <li><a href="{% url 'passwordchange' %}">ChangePassword</a></li>
+
+                                                      <li><a href="{% url 'logout' %}"><span style="color: red;">Logout</a></li>
+
+
+
+                          </ul>
+                      </li>
+                        {%  else  %}
+                        <li>
+                          <a href="{% url 'login'  %}" class="">Login</a>
+                      </li>
+                      <li>
+                          <a href="{% url 'register'  %}" class="">Register</a>
+                      </li>
+                        {% endif  %}
+                    </ul>
+                </nav><!-- End .mobile-nav -->
+
+                <div class="social-icons">
+                    <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                    <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                    <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                    <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+                </div><!-- End .social-icons -->
+            </div><!-- End .mobile-menu-wrapper -->
+        </div><!-- End .mobile-menu-container -->
+
+   </div>
+
+{%  endblock home %}

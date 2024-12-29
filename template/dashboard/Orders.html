@@ -1,0 +1,251 @@
+{% extends 'base file/base.html' %}
+{% block home %}
+<style>
+body{
+    background-color: #611855;
+}
+
+    /* Order Card Styles */
+    .loader {
+  color: #0c0606;
+  font-size: 15px;
+  text-indent: -9999em;
+  overflow: hidden;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position: relative;
+  transform: translateZ(0);
+  animation: mltShdSpin 1.7s infinite ease, round 1.7s infinite ease;
+}
+
+@keyframes mltShdSpin {
+  0% {
+    box-shadow: 0 -0.83em 0 -0.4em,
+    0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em,
+    0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+  5%,
+  95% {
+    box-shadow: 0 -0.83em 0 -0.4em,
+    0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em,
+    0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+  10%,
+  59% {
+    box-shadow: 0 -0.83em 0 -0.4em,
+    -0.087em -0.825em 0 -0.42em, -0.173em -0.812em 0 -0.44em,
+    -0.256em -0.789em 0 -0.46em, -0.297em -0.775em 0 -0.477em;
+  }
+  20% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em,
+     -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em,
+     -0.749em -0.34em 0 -0.477em;
+  }
+  38% {
+    box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em,
+     -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em,
+     -0.82em -0.09em 0 -0.477em;
+  }
+  100% {
+    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em,
+    0 -0.83em 0 -0.44em, 0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+  }
+}
+
+@keyframes round {
+  0% { transform: rotate(0deg) }
+  100% { transform: rotate(360deg) }
+}
+
+.order-card {
+    width: 60%;
+    margin-left: 200px;
+
+    border: 2px solid #948e8e;
+    padding: 20px;
+    margin-bottom: 50px;
+    background-color: rgba(246, 246, 247, 0.918);
+    border-radius: 21px;
+    background: #fefeff8c;
+
+}
+
+.order-card:hover {
+    transform: translateY(-10px);
+    transition: all 0.5s;
+    box-shadow:  -32px -32px 71px #b5b2e273,
+             32px 32px 71px #e1deff5d;
+}
+
+/* Order Header Styles */
+.order-header h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.order-header p {
+    margin: 5px 0 0;
+    font-size: 14px;
+    color: #666;
+}
+
+/* Order Details Styles */
+.order-details .product-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.product-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: bolder;
+    color: #0a0909;
+}
+
+.product-item.subtotal,
+.product-item.total {
+    font-weight: bold;
+    font-size: 28px;
+    color: #0a0909;
+
+}
+
+/* Product Name Styles */
+.product-name {
+    flex: 1;
+}
+
+/* Product Price Styles */
+.product-price {
+    margin-left: 10px;
+    font-size: 20px;
+    color: #0a0909;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .order-card {
+        padding: 15px;
+    }
+
+    .product-item {
+        font-size: 14px;
+    }
+}
+#product-image img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+}
+</style>
+<h1 style="color: rgb(252, 252, 251); width: 90%;"><marquee behavior="" direction="">Your Orders</marquee></h1>
+<!-- orders.html -->
+
+<!-- Order Card -->
+{% for order in orders %}
+<div class="grid"></div>
+<div class="order-card grid">
+    <!-- Order Header -->
+    <div class="order-header grid-col-6">
+        <h3>Order No: #{{order.id}}</h3>
+        <p style="font-weight: bold; color: #0c0606;">Date: {{order.created}}</p>
+    </div>
+    <!-- End Order Header -->
+
+    <!-- Order Details -->
+    <div class="order-details">
+        <ul class="product-list">
+            <!-- Product Items -->
+            <span id="product-image"><img src="{{order.product.image.url}}" alt=""> </span>
+            <li class="product-item">
+
+                <span class="product-name">{{order.product.name}} </span>
+                <span class="product-price">{{order.product.price}} X {{order.quantity}}pis</span>
+            </li>
+
+            <li class="product-item">
+                <span class="product-name">Status:</span>
+                {%  if order.status == "proccesing" %}
+                <span class="loader">p</span>
+
+                {% elif order.status == "parcel"  %}
+                <a class="btn  " aria-disabled="true" style="color: white; font-weight: bolder; background-color: #faf61b; width: 5px;">Parceled</a>
+                {% elif order.status == "on the way" %}
+                <a class="btn "  aria-disabled="true" style="color: white; font-weight: bolder; width: 15px; background-color: rgb(141, 240, 13);">On the way</a>
+                {% elif order.status == "delivered" %}
+                <a class="btn " aria-disabled="true" style="color: white; font-weight: bolder; width: 20px; background-color: blue; ">Delivered</a>
+                {% elif order.status == "cancaled" %}
+                <a class="btn " aria-disabled="true" style="color: white; font-weight: bolder; width: 20px; background-color: rgb(238, 64, 11); ">Canceled</a>
+
+                {% endif %}
+            </li>
+
+            <!-- End Product Items -->
+             <li class="product-item">
+                <span class="product-name">Shipping:</span>
+                <span class="product-price">{{shipping_cost}}</span>
+            </li>
+            <!-- Subtotal -->
+            <li class="product-item subtotal">
+                <span class="product-name">Subtotal:</span>
+                <span class="product-price">{{order.get_total_price}}</span>
+            </li>
+            <!-- End Subtotal -->
+
+            <!-- Shipping -->
+
+            <!-- End Shipping -->
+            <p>----------------------</p>
+            <!-- Total -->
+
+            <!-- End Total -->
+        </ul>
+
+    </div>
+    <!-- End Order Details -->
+</div>
+<!-- End Order Card -->
+{% empty %}
+
+<h1>No Orders</h1>
+</div>
+
+{% endfor %}
+
+
+{% if user.is_authenticated  %}
+<div class="container newsletter-popup-container mfp-hide" id="newsletter-popup-form">
+ <div class="row justify-content-center">
+     <div class="col-10">
+         <div class="row no-gutters bg-white newsletter-popup-content">
+             <div class="col-xl-3-5col col-lg-7 banner-content-wrap">
+                 <div class="banner-content text-center">
+                     <h1>Dear  <span><light>{{request.user | capfirst }}</light></span></h1>
+                     <h2 class="banner-title"><span>Thanks for your Order<light></light></span></h2>
+                     <p style="color: #db14b0; font-weight: bold;">Please be paitence our agent will contact you soon..</p>
+                     <h5 style="font-style: italic; font-weight: bold;"> <-----For any Problem-----> </h5>
+                     <p style="color: #0a0909; font-weight: bold;"> Call  : <a href="tel:01623329513" style="color: #611855; font-weight: bold;">O1623329523</a> </p>
+
+                     <div class="custom-control custom-checkbox">
+                         <input type="checkbox" class="custom-control-input" id="register-policy-2" required>
+                         <label class="custom-control-label" for="register-policy-2">Do not show this popup again</label>
+                     </div><!-- End .custom-checkbox -->
+                 </div>
+             </div>
+             <div class="col-xl-2-5col col-lg-5 ">
+                 <img src="/static/assets/images/_9797e217-a09a-4e5f-b67c-d7c392a48a3c.jpeg" class="newsletter-img" alt="newsletter">
+             </div>
+         </div>
+     </div>
+ </div>
+</div>
+
+
+{% endif %}
+
+{% endblock home %}

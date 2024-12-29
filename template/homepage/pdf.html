@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Details</title>
+    <style>
+        .order-details {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .order-details th, .order-details td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Order Details</h2>
+    <table class="order-details">
+        <tr>
+            <th>Order ID</th>
+            <td>{{ order.id }}</td>
+        </tr>
+        <tr>
+            <th>User</th>
+            <td>{{ order.user.username }}</td>
+        </tr>
+        <tr>
+            <th>Total Amount</th>
+            <td>{{ order.total_amount }}</td>
+        </tr>
+        <!-- Add more fields as needed -->
+    </table>
+</body>
+</html>

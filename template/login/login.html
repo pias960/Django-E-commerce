@@ -1,0 +1,205 @@
+{% extends 'base file/base.html' %}
+{% block home %}
+    <style>
+        /* styles.css */
+
+/* Style the form container */
+
+.main {
+    max-height: 700px;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 14px;
+    background: #cbc8fe52;
+box-shadow:  -32px -32px 71px #b5b2e2,
+             32px 32px 71px #e1deff;
+
+}
+
+/* Style form labels */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Style form input fields */
+
+input {
+
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid #f8f6f644;
+    border-radius: 4px;
+}
+
+/* Style the help text */
+.helptext {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+buttons {
+ width: 9em;
+ height: 3em;
+ border-radius: 30em;
+ font-size: 15px;
+ font-family: inherit;
+ border: none;
+ position: relative;
+ overflow: hidden;
+ z-index: 1;
+ box-shadow: 6px 6px 12px #8d8d8d,
+             -6px -6px 12px #858484;
+}
+
+buttons::before {
+ content: '';
+ width: 0;
+ height: 3em;
+ border-radius: 30em;
+ position: absolute;
+ top: 0;
+ left: 0;
+ background-image: linear-gradient(to right, #0fd850 0%, #f9f047 100%);
+ transition: .5s ease;
+ display: block;
+ z-index: -1;
+}
+
+buttons:hover::before {
+ width: 9em;
+}
+marquee{
+    font-size: 40px;
+    color: #f6f8f8;
+    background: linear-gradient(to right, rgba(255, 192, 203, 0.479), rgba(68, 192, 250, 0.404));
+
+    border: 5px inset rgba(227, 227, 238, 0.408);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-family: 'Times New Roman', Times, serif;
+ }
+
+body{
+    background-image: url(/static/assets/images/3d-illustration-smartphone-with-products-coming-out-screen-online-shopping-e-commerce-concept.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+    </style>
+</head>
+<body>
+
+   <div class="main">
+    <marquee id="myMarquee" behavior="scroll" direction="left">Register here</marquee>
+    <!-- signup.html -->
+<form action="" method="post" novalidate>
+    {% csrf_token %}
+
+    {% for field in form %}
+        <div>
+            {{ field.label_tag }} {{ field }}
+            {% if field.errors %}
+                <span style="color: red;">{{ field.errors }}</span>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+     <input type="submit"  class="buttons">
+
+
+</form>
+ {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <p>Already have a account? <a href="{% url 'login'  %}">Login here</a></p>
+   </div>
+
+   <div class="mobile-menu-container">
+          <div class="mobile-menu-wrapper">
+              <span class="mobile-menu-close"><i class="icon-close"></i></span>
+
+              <form action="#" method="get" class="mobile-search">
+                  <label for="mobile-search" class="sr-only">Search</label>
+                  <input type="search" class="form-control" name="Search" id="mobile-search" placeholder="Search in..." required>
+                  <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+              </form>
+
+              <nav class="mobile-nav">
+                  <ul class="mobile-menu">
+                      <li class="active">
+                          <a href="{% url 'Uhome'  %}">Home</a>
+
+
+                      </li>
+                      <li>
+                          <a href="#">About us</a>
+
+                      </li>
+
+
+                      <li>
+                          <a href="#">Category</a>
+
+                          <ul>
+
+                              {%  for cat in sub %}
+
+                                                    <li><a href="{% url 'products_by_category' cat.id %}">{{cat.name | upper}}</a>
+
+
+                                                    </li>
+
+
+
+                                                {% endfor %}
+
+
+                          </ul>
+                      </li>
+                      {%  if user.is_authenticated %}
+                      <li>
+
+
+                        <a href="#">{{ request.user}}</a>
+                        <ul>
+
+                            <li><a href="{% url 'profile'  %}">Profile</a></li>
+                                                    <li><a href="{% url 'passwordchange' %}">ChangePassword</a></li>
+
+                                                    <li><a href="{% url 'logout' %}"><span style="color: red;">Logout</a></li>
+
+
+
+                        </ul>
+                    </li>
+                      {%  else  %}
+                      <li>
+                        <a href="{% url 'login'  %}" class="">Login</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'register'  %}" class="">Register</a>
+                    </li>
+                      {% endif  %}
+                  </ul>
+              </nav><!-- End .mobile-nav -->
+
+              <div class="social-icons">
+                  <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                  <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                  <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                  <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+              </div><!-- End .social-icons -->
+          </div><!-- End .mobile-menu-wrapper -->
+      </div><!-- End .mobile-menu-container -->
+
+   {% endblock home %}

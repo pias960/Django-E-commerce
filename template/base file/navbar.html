@@ -1,0 +1,115 @@
+
+<header class="header" style="background-color: rgba(240, 248, 255, 0.397);">
+        
+    <div class="header-middle sticky-header">
+        <div class="container">
+            <div class="header-left">
+                <button class="mobile-menu-toggler">
+                    <span class="sr-only">Toggle mobile menu</span>
+                    <i class="icon-bars"></i>
+                </button>
+
+                <a href="#" class="logo">
+                    <img style="border-radius: 70%; height: 50px; width: 50px;" src="/static/assets/images/icons/372014281_640194001535638_2895058181197858971_n.jpg" alt="Molla Logo" width="105" height="25">
+                </a>
+
+                <nav class="main-nav">
+                    <ul class="menu sf-arrows">
+                        <li class="megamenu-container active">
+                            <a href="{% url 'Uhome' %}" class="">Home</a>
+
+                         
+                        </li>
+                        
+                        <li>
+                            <a href="#all-product" class="sf-with-ul">Product</a>
+
+                            <div class="megamenu megamenu-sm">
+                                <div class="row no-gutters">
+                                    <div class="col-md-6">
+                                        <div class="menu-col">
+                                            <div class="menu-title">Product Details</div><!-- End .menu-title -->
+                                           
+                                            <ul>
+                                                {%  for cat in cats %}
+                                                <li><a href="#Mobiles">{{cat.name}}</a>
+                                                
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                            
+                                            
+                                        </div><!-- End .menu-col -->
+                                    </div><!-- End .col-md-6 -->
+
+                                  
+                                </div><!-- End .row -->
+                            </div><!-- End .megamenu megamenu-sm -->
+                        </li>
+                     
+                        <li>
+                            <a href="{% url 'about'  %}" class="">About us</a>
+
+                        
+                        </li>
+                        {%  if user.is_authenticated %}
+                        
+                        <li>
+                            <a href="#" class="sf-with-ul">{{request.user | capfirst }}</a>
+
+                            <div class="megamenu megamenu-sm">
+                                <div class="row no-gutters">
+                                    <div class="col-md-6">
+                                        <div class="menu-col">
+                                          
+                                            <ul>
+                                                <li><a href="{% url 'profile'  %}">Profile</a></li>
+                                                <li><a href="{% url 'passwordchange' %}">ChangePassword</a></li>
+                                                
+                                                <li><a href="{% url 'logout' %}"><span style="color: red;">Logout</a></li>
+                                               
+                                            </ul>
+                                        </div><!-- End .menu-col -->
+                                    </div><!-- End .col-md-6 -->
+
+                                  
+                                </div><!-- End .row -->
+                            </div><!-- End .megamenu megamenu-sm -->
+                            {% else %}
+                            <li>
+                                <a href="{% url 'login'  %}" class="">Login</a>
+                            </li>
+                            <li>
+                                <a href="{% url 'register'  %}" class="">Register</a>                                  
+                            </li>
+                            {% endif %}
+                    </ul><!-- End .menu -->
+                </nav><!-- End .main-nav -->
+            </div><!-- End .header-left -->
+
+            <div class="header-right">
+                <div class="header-search">
+                    <a href="#" class="search-toggle" role="button" title="Search"><i class="icon-search"></i></a>
+                    <form action="#" method="get">
+                        <div class="header-search-wrapper">
+                            <label for="q" class="sr-only">Search</label>
+                            <input type="search" class="form-control" name="Search" id="q" placeholder="Search in..." required>
+                        </div><!-- End .header-search-wrapper -->
+                    </form>
+                </div><!-- End .header-search -->
+               
+
+                <div class="dropdown cart-dropdown">
+                    <a href="{% url 'cart' %}" class="dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                        <i class="icon-shopping-cart"></i>
+                        <span class="cart-count">2</span>
+                    </a>
+
+                </div><!-- End .cart-dropdown -->
+            </div><!-- End .header-right -->
+        </div><!-- End .container -->
+    </div><!-- End .header-middle -->
+</header><!-- End .header -->
+
+
+ 

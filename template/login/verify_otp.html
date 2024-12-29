@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/static/images/khulna-car-rental-high-resolution-logo (2).png" type="image/x-icon">
+  <title>Pickashaw : OTP Verify
+  </title>
+    <style>
+        /* styles.css */
+
+/* Style the form container */
+
+.main {
+    max-height: 700px;
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 14px;
+    background: #cbc8fe52;
+box-shadow:  -32px -32px 71px #b5b2e2,
+             32px 32px 71px #e1deff;
+
+}
+
+/* Style form labels */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Style form input fields */
+
+input {
+
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid #f8f6f644;
+    border-radius: 4px;
+}
+
+/* Style the help text */
+.helptext {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+button {
+ width: 9em;
+ height: 3em;
+ border-radius: 30em;
+ font-size: 15px;
+ font-family: inherit;
+ border: none;
+ position: relative;
+ overflow: hidden;
+ z-index: 1;
+ box-shadow: 6px 6px 12px #8d8d8d,
+             -6px -6px 12px #858484;
+}
+
+button::before {
+ content: '';
+ width: 0;
+ height: 3em;
+ border-radius: 30em;
+ position: absolute;
+ top: 0;
+ left: 0;
+ background-image: linear-gradient(to right, #0fd850 0%, #f9f047 100%);
+ transition: .5s ease;
+ display: block;
+ z-index: -1;
+}
+
+button:hover::before {
+ width: 9em;
+}
+marquee{
+    font-size: 40px;
+    color: #f6f8f8;
+    background: linear-gradient(to right, rgba(255, 192, 203, 0.479), rgba(68, 192, 250, 0.404));
+
+    border: 5px inset rgba(227, 227, 238, 0.408);
+    border-radius: 10px;
+    margin-bottom: 10px;
+    font-family: 'Times New Roman', Times, serif;
+ }
+
+body{
+    background-color: #cbc8fe52;
+}
+.error{
+    border: 1px solid rgb(235, 89, 89);
+    background-color: rgba(233, 63, 63, 0.377);
+    color:rgb(14, 3, 3);
+    font-weight:bold;
+    font-size:14px;
+    padding:10px;
+    border-radius:10px;
+    width: 350px;
+}
+.security-message {
+  color: #333;
+  background-color: #f3f3f3;
+  border-left: 4px solid #5cb85c;
+  padding: 10px;
+  margin-top: 20px;
+  border-radius: 4px;
+}
+
+
+    </style>
+</head>
+<body>
+
+   <div class="main">
+
+<form action="" method="post" novalidate>
+    {% csrf_token %}
+
+    {% for field in form %}
+        <div>
+            {{ field.label_tag }} {{ field }}
+            {% if field.errors %}
+                <span style="color: red;">{{ field.errors }}</span>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <button type="submit">Signup</button>
+
+
+</form>
+ {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <p{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</p>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <p>Don't get a otp? <a href="{% url 'login'  %}">Resend</a></p>
+   </div>
+    <p class="security-message">
+  The OTP (One-Time Password) sent to you is for your security and to verify your identity. It helps us ensure that only you have access to your account.
+</p>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <style>
+        /* Reset styles */
+        body, h1, h2, h3, p, ul, li {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        /* Order Card Styles */
+        .order-card {
+            width: 100%;
+            max-width: 600px; /* Set maximum width */
+            margin: 0 auto; /* Center the card */
+            border: 2px dotted #948e8e;
+            padding: 20px;
+            margin-bottom: 50px;
+            background-color: #fefeff;
+            border-radius: 21px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            transition: all 0.3s;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Order Header Styles */
+        .order-header h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .order-header p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        /* Order Details Styles */
+        .product-list {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .product-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .product-item.subtotal, .product-item.total {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            .order-card {
+                width: 90%;
+            }
+
+            .product-item {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+{% for order in orders  %}
+<div class="order-card">
+    <!-- Order Header -->
+    <div class="order-header">
+        <h3>Order No: #{{ order.id }}</h3>
+        <p>Username: {{ order.user }}</p>
+        <p>Date: {{ order.created }}</p>
+    </div>
+    <!-- End Order Header -->
+
+    <!-- Order Details -->
+    <div class="order-details">
+        <ul class="product-list">
+            <!-- Product Items -->
+           
+            <li class="product-item">
+                <span class="product-name">{{ order.product.name }}</span>
+                <span class="product-name">{{ order.quantity }}</span>
+                <span class="product-price">{{ order.product.price }}</span>
+            </li>
+           
+
+        </ul>
+    </div>
+    <!-- End Order Details -->
+</div>
+
+{% if empty %}
+<h1>No Orders</h1>
+
+{% endif %}
+{% endfor %}
+
+</body>
+</html>

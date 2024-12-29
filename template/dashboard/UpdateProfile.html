@@ -1,0 +1,252 @@
+{% extends 'base file/base.html' %}
+{% block home %}
+
+   <style>
+/* Style the form container */
+.main {
+    width: 90%;
+    max-width: 600px; /* Set maximum width for larger screens */
+    margin: 50px auto;
+    padding: 20px;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #45c4eb, #4dd6a1);
+    box-shadow: 30px 30px 60px #fefdff,
+                -30px -30px 60px #f6f6fa;
+}
+
+/* Style form labels */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Style form input fields */
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Style the help text */
+.helptext {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Style form submit button */
+.btn-17 {
+    border: 0 solid;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-appearance: button;
+    background-color: #0c0c0c;
+    background-image: none;
+    color: #fff;
+    cursor: pointer;
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    font-size: 100%;
+    font-weight: 900;
+    line-height: 1.5;
+    margin: 0;
+    -webkit-mask-image: -webkit-radial-gradient(#f2f7f8, #0d0e0d);
+    padding: 0;
+    text-transform: uppercase;
+    border-radius: 99rem;
+    border-width: 2px;
+    padding: 0.8rem 3rem;
+    z-index: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+.btn-17 .text-container {
+    overflow: hidden;
+    position: relative;
+}
+
+.btn-17 .text {
+    display: block;
+    position: relative;
+}
+
+.btn-17:hover .text {
+    -webkit-animation: move-up-alternate 0.3s forwards;
+    animation: move-up-alternate 0.3s forwards;
+}
+
+@-webkit-keyframes move-up-alternate {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(80%);
+    }
+    51% {
+        transform: translateY(-80%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes move-up-alternate {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(80%);
+    }
+    51% {
+        transform: translateY(-80%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
+.btn-17:after,
+.btn-17:before {
+    --skew: 0.2;
+    background: #f2f5f3;
+    content: "";
+    display: block;
+    height: 102%;
+    left: calc(-50% - 50% * var(--skew));
+    pointer-events: none;
+    position: absolute;
+    top: -104%;
+    transform: skew(calc(150deg * var(--skew))) translateY(var(--progress, 0));
+    transition: transform 0.2s ease;
+    width: 100%;
+}
+
+.btn-17:after {
+    --progress: 0%;
+    left: calc(50% + 50% * var(--skew));
+    top: 102%;
+    z-index: -1;
+}
+
+.btn-17:hover:before {
+    --progress: 100%;
+}
+
+.btn-17:hover:after {
+    --progress: -102%;
+}
+
+@media (max-width: 768px) {
+    .main {
+        width: 90%; /* Adjust width for smaller screens */
+        max-width: none;
+    }
+}
+    </style>
+
+   <div class="main">
+    <h1>Update your profile</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {% for fm in form %}
+            {{ fm.label_tag }}
+            {{ fm }}
+            {{ fm.errors|striptags }}
+        {% endfor %}
+        <button class="btn-17" type="submit">
+            <span class="text-container">
+                <span class="text">Update</span>
+            </span>
+        </button>
+    </form>
+    {% if messages %}
+        {% for message in messages %}
+            <small {% if message.tags %} class="{{message.tags}}" {% endif %}> {{message}}</small>
+        {% endfor %}
+    {% endif %}
+   </div>
+     <div class="mobile-menu-container">
+          <div class="mobile-menu-wrapper">
+              <span class="mobile-menu-close"><i class="icon-close"></i></span>
+
+              <form action="#" method="get" class="mobile-search">
+                  <label for="mobile-search" class="sr-only">Search</label>
+                  <input type="search" class="form-control" name="Search" id="mobile-search" placeholder="Search in..." required>
+                  <button class="btn btn-primary" type="submit"><i class="icon-search"></i></button>
+              </form>
+
+              <nav class="mobile-nav">
+                  <ul class="mobile-menu">
+                      <li class="active">
+                          <a href="{% url 'Uhome'  %}">Home</a>
+
+
+                      </li>
+                      <li>
+                          <a href="#">About us</a>
+
+                      </li>
+
+
+                      <li>
+                          <a href="#">Category</a>
+
+                          <ul>
+
+                              {%  for cat in sub %}
+
+                                                    <li><a href="{% url 'products_by_category' cat.id %}">{{cat.name | upper}}</a>
+
+
+                                                    </li>
+
+
+
+                                                {% endfor %}
+
+
+                          </ul>
+                      </li>
+                      {%  if user.is_authenticated %}
+                      <li>
+
+
+                        <a href="#">{{ request.user}}</a>
+                        <ul>
+
+                            <li><a href="{% url 'profile'  %}">Profile</a></li>
+                                                    <li><a href="{% url 'passwordchange' %}">ChangePassword</a></li>
+
+                                                    <li><a href="{% url 'logout' %}"><span style="color: red;">Logout</a></li>
+
+
+
+                        </ul>
+                    </li>
+                      {%  else  %}
+                      <li>
+                        <a href="{% url 'login'  %}" class="">Login</a>
+                    </li>
+                    <li>
+                        <a href="{% url 'register'  %}" class="">Register</a>
+                    </li>
+                      {% endif  %}
+                  </ul>
+              </nav><!-- End .mobile-nav -->
+
+              <div class="social-icons">
+                  <a href="#" class="social-icon" target="_blank" title="Facebook"><i class="icon-facebook-f"></i></a>
+                  <a href="#" class="social-icon" target="_blank" title="Twitter"><i class="icon-twitter"></i></a>
+                  <a href="#" class="social-icon" target="_blank" title="Instagram"><i class="icon-instagram"></i></a>
+                  <a href="#" class="social-icon" target="_blank" title="Youtube"><i class="icon-youtube"></i></a>
+              </div><!-- End .social-icons -->
+          </div><!-- End .mobile-menu-wrapper -->
+      </div><!-- End .mobile-menu-container -->
+
+
+    {% endblock home %}
