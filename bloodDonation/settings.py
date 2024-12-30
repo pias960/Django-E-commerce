@@ -24,9 +24,9 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 SECRET_KEY = 'django-insecure-q9c4i0x7mvpym+1)d7tb&m6ty*133n^=g^w(*7s%(5zsi*^6xf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['Pickashaw.pythonanywhere.com']
+ALLOWED_HOSTS = []
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 # Application definition
